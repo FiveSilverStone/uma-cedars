@@ -1,8 +1,9 @@
 import './User.css';
+import { finishLinePosition, trackLineLength, defaultSpeed, bunningSpeed } from '../setting';
 import { useEffect, useState } from 'react';
 
-function User({sequence, user, handleUserUpdate}) {
-  const [position, setPosition] = useState(0);
+function User({sequence, user, handleUserUpdate, handleFinish}) {
+  // const [position, setPosition] = useState(0);
   const [bunning, setBunning] = useState({
     state: false,
     turn: 0
@@ -15,7 +16,7 @@ function User({sequence, user, handleUserUpdate}) {
   }
 
   const checkBunningSequence = () => {
-    const nextPosition = user.position+(Math.random()*6 * 1.3);
+    const nextPosition = user.position+(Math.random() * defaultSpeed * bunningSpeed);
 
     handleUserUpdate({
       ...user,
@@ -28,20 +29,28 @@ function User({sequence, user, handleUserUpdate}) {
   }
 
   useEffect(()=>{
-    if(sequence%100 === 0){
-      if(!bunning.state && getRandomInt(1, 100) > 90 ) setBunning({ state: true, turn: 0});
-    } else {
-      if(bunning.state) checkBunningSequence();
-      else {
-        const nextPosition = user.position+(Math.random()*6);
-        
-        // setPosition(nextPosition);
+    if(!user.finished){
+      if(user.position >= window.innerWidth * (finishLinePosition/100) && user.position <= window.innerWidth * (trackLineLength/100)){
+        handleFinish(user);
         handleUserUpdate({
           ...user,
-          position: nextPosition
+          finished: true
         })
-      }
-    }    
+      } else if(sequence%100 === 0){
+        if(!bunning.state && getRandomInt(1, 100) > 90 ) setBunning({ state: true, turn: 0});
+      } else {
+        if(bunning.state) checkBunningSequence();
+        else {
+          const nextPosition = user.position+(Math.random() * defaultSpeed);
+          
+          // setPosition(nextPosition);
+          handleUserUpdate({
+            ...user,
+            position: nextPosition
+          })
+        }
+      } 
+    }
   },[sequence]);
 
   return (    
