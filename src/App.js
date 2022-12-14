@@ -3,7 +3,7 @@ import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import { useImmer } from 'use-immer';
 
-import { trackLineLength, finishLinePosition, rankUserCount } from './setting';
+import { trackLineLength, finishLinePosition, rankUserCount, defaultMaxStamina } from './setting';
 
 
 import User from './component/User';
@@ -12,11 +12,16 @@ const userList = ['A', 'B', 'C', 'D', 'E', 'F']
 
 const userData = userList.map(name => {
   return { 
-    name, position: 0, isBunning: false, finished: false
+    name, 
+    position: 0, 
+    isBunning: false, 
+    finished: false,
+    stamina: defaultMaxStamina,
+    maxStamina: defaultMaxStamina
   }
 })
 
-let rank = {
+let topRankUser = {
   name: null,
   position: 0,
 };
@@ -34,10 +39,12 @@ function App() {
     setUsers(draft => {
       const user = draft.find(t => t.name === nextUser.name)
       user.position = nextUser.position;
-      user.finished = nextUser.finished;  
+      user.finished = nextUser.finished;
+      user.stamina = nextUser.stamina;
+      user.maxStamina = nextUser.maxStamina;
     })
 
-    if(rank.position < nextUser.position) rank = nextUser;
+    if(topRankUser.position < nextUser.position) topRankUser = nextUser;
   }
 
   const handleFinish = (user) => {
@@ -60,24 +67,32 @@ function App() {
   }, []); 
 
   useEffect(() => {    
-    scrollElement.current.scrollLeft = (rank.position - 1200);    
+    scrollElement.current.scrollLeft = (topRankUser.position - 1200);    
   }, [sequence]); 
 
   useEffect(() => {
     if(rankUsers.length >= rankUserCount) clearInterval(interval);    
   }, [rankUsers]);
 
-  const remainDistance = finishDistance(rank.position);
+  const remainDistance = finishDistance(topRankUser.position);
   return (
     <div className="App">    
       <div className='top-board'>
         <div className='info-board'>
-          <div>
-            현재 1위: {rank.name}
-          </div>
-          <div>
-            남은거리: {remainDistance}m
-          </div>
+          {rankUsers.length > 0 ? 
+            <>
+              {rankUsers.map((user, idx)=><div>{idx+1}위: {user.name}</div>)}
+            </>
+            :
+            <>
+            <div>
+              현재 1위: {topRankUser.name}
+            </div>
+            <div>
+              남은거리: {remainDistance}m
+            </div>
+            </>
+          }          
         </div>
       </div> 
       <div id="scroll" ref={scrollElement}>
@@ -91,12 +106,7 @@ function App() {
           <div className="bush jump6"></div>
           <div id="finishline" style={{marginLeft: `${finishLinePosition}vw`}} />
         </div>       
-      </div>
-      <div className='top-board'>
-        <div className='info-board'>
-          {rankUsers.map((user, idx)=><div>{idx+1}위: {user.name}</div>)}
-        </div>
-      </div>
+      </div>      
     </div>
   );
 }

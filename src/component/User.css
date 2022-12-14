@@ -1,3 +1,24 @@
+progress {
+  top: 50px;
+  left: -10px;
+  position: relative;
+  width: 80px;
+  height: 10px;
+  appearance: none;
+}
+progress::-webkit-progress-bar {
+  background:#f0f0f0;
+  border: white 1px solid;
+  border-radius:10px;
+  box-shadow: inset 3px 3px 10px #ccc;
+}
+progress::-webkit-progress-value {
+  border-radius:10px;
+  background: #1D976C;
+  background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
+  background: linear-gradient(to right, #93F9B9, #1D976C);
+
+}
 
 .horse.runRight {
 	width: 96px;

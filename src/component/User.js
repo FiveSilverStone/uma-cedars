@@ -1,9 +1,8 @@
 import './User.css';
-import { finishLinePosition, trackLineLength, defaultSpeed, bunningSpeed } from '../setting';
+import { finishLinePosition, trackLineLength, defaultSpeed, bunningSpeed, staminaCorrectionSpeed } from '../setting';
 import { useEffect, useState } from 'react';
 
 function User({sequence, user, handleUserUpdate, handleFinish}) {
-  // const [position, setPosition] = useState(0);
   const [bunning, setBunning] = useState({
     state: false,
     turn: 0
@@ -16,11 +15,14 @@ function User({sequence, user, handleUserUpdate, handleFinish}) {
   }
 
   const checkBunningSequence = () => {
-    const nextPosition = user.position+(Math.random() * defaultSpeed * bunningSpeed);
+    let correctionRate = 1.0;
+    if(user.stamina > 0) correctionRate = staminaCorrectionSpeed;
+    const nextPosition = user.position+(Math.random() * defaultSpeed * bunningSpeed * correctionRate);
 
     handleUserUpdate({
       ...user,
-      position: nextPosition
+      position: nextPosition,
+      stamina: user.stamina <= 0 ? 0 : user.stamina - 1
     })
 
     const updateTurn = bunning.turn + 1;
@@ -42,8 +44,6 @@ function User({sequence, user, handleUserUpdate, handleFinish}) {
         if(bunning.state) checkBunningSequence();
         else {
           const nextPosition = user.position+(Math.random() * defaultSpeed);
-          
-          // setPosition(nextPosition);
           handleUserUpdate({
             ...user,
             position: nextPosition
@@ -61,6 +61,7 @@ function User({sequence, user, handleUserUpdate, handleFinish}) {
       </div>
       <span>{user.name}</span>
       {bunning.state ? <span className="bunning">버닝중!! {bunning.turn}</span> : null}
+      <progress value={user.stamina} max={user.maxStamina}></progress>
     </div>        
   );
 }
