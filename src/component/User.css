@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Dokdo&display=swap');
+
+
 progress {
+  z-index: 90;
   top: 50px;
   left: -10px;
   position: relative;
@@ -33,28 +37,6 @@ progress::-webkit-progress-value {
 	50% {background-position: 0px -512px;}
 }
 
-.horse.runDown {
-	width: 48px;
-	height: 64px;
-	background-position:48px 192px;
-	animation: horseDown steps(1) 0.75s  infinite;
-}
-
-
-@keyframes horseDown {
-	0%, 100% {background-position:48px -192px; }
-	33% {background-position:48px -380px; }
-	66% {background-position:48px 0px;}
-}
-
-
-.horse.runUp {
-	width: 48px;
-	height: 64px;
-	background-position:0px 192px;
-	animation: horseUp steps(1) 0.75s  infinite;
-}
-
 
 @keyframes horseUp {
 	0%, 100% {background-position:0px -192px; }
@@ -85,58 +67,32 @@ progress::-webkit-progress-value {
 }
 
 
-
-#horse1 {
-	position: absolute; top: 5vh; z-index: 999;
+.horse1 {
+  background-image: url(/public/images/horse1.png);
 }
 
-#horse4 .rider .head {background-image: url(/public/images/head2.png);}
-#horse4 .rider .body {background-image: url(/public/images/body3.png);}
-
-
-#horse3 .rider .head {background-image: url(/public/images/head1.png);}
-#horse3 .rider .body {background-image: url(/public/images/body1.png);}
-
-#horse2 .rider .head {background-image: url(/public/images/head4.png);}
-#horse2 .rider .body {background-image: url(/public/images/body4.png);}
-
-#horse2 {
-	z-index: 999;
-  margin-top: 10px;
-  position: relative;
+.horse2 {
 	background-image: url(/public/images/horse3.png);
 }
 
-
-
-#horse3 {
-	position: absolute; top: 25vh;  z-index: 999;
-	background-image: url(/public/images/horse1.png);
+.horse3 {
+	background-image: url(/public/images/horse3.png);
 }
 
-#horse4 {
-	position: absolute; top: 35vh; z-index: 999;
+.horse4 {
 	background-image: url(/public/images/horse4.png);
 }
 
-.horse {left: 2vw;}
-
-.horse.standLeft {background-position: 0px -64px; width: 96px; height: 60px;}
-.horse.standLeft .rider .body {background-position: -32px -320px;}
-.horse.standLeft .rider .head {background-position: 0px -32px;}
-
-
-.horse.standRight {background-position: 0px -128px; width: 96px; height: 60px;}
-.horse.standRight .rider {margin-left: -15px;}
-.horse.standRight .rider .body {background-position: -96px -320px;}
-.horse.standRight .rider .head {background-position: 0px -96px;}
-
+.horse {
+  left: 2vw;
+  margin-top: 10px;
+  position: relative;
+}
 
 .horse .rider .head {
 	position: absolute;
 	margin-left: 40px;
-	margin-top: -16px;
-	background-image: url(/public/images/head0.png);
+	margin-top: -9px;
 	width: 32px;
 	height: 32px;
 }
@@ -144,13 +100,26 @@ progress::-webkit-progress-value {
 
 .horse .rider .body {
   position: absolute;
-	background-image: url(/public/images/body0.png);
  	width: 32px;
  	height: 32px;
  	margin-left: 40px;
  	margin-top: 8px;
 }
 
+.horse1 .rider .head {background-image: url(/public/images/head2.png);}
+.horse1 .rider .body {background-image: url(/public/images/body2.png);}
+
+.horse2 .rider .head {
+  margin-top: -15px;
+  background-image: url(/public/images/head4.png);
+}
+.horse2 .rider .body {background-image: url(/public/images/body4.png);}
+
+.horse4 .rider .head {background-image: url(/public/images/head3.png);}
+.horse4 .rider .body {background-image: url(/public/images/body3.png);}
+
+.horse3 .rider .head {background-image: url(/public/images/head1.png);}
+.horse3 .rider .body {background-image: url(/public/images/body1.png);}
 
 
 
@@ -179,50 +148,6 @@ progress::-webkit-progress-value {
 }
 
 
-.horse.runDown, .horse.runUp {
-	margin-left: 32px;
-}
-
-.horse.runDown .rider {
-	margin-left: -32px;
-
-}
-
-.horse.runDown .rider .head {
-	background-position: 0px -64px;
-	animation: headbob5 0.5s infinite;
-}
-
-.horse.runDown .rider .body {
-	background-position: -64px -320px;
-	margin-top: -16px;
-}
-
-
-
-
-.horse.runUp .rider {
-	margin-left: -32px;
-    animation: riderBob2 0.75s infinite;
-}
-
-.horse.runUp .rider .head {
-	background-position: 0px 0px;
-	animation: headbob5 0.5s infinite;
-}
-
-.horse.runUp .rider .body {
-	background-position: 0px -320px;
-	margin-top: -16px;
-}
-
-
-.horse.runLeft .rider .head {
-	background-position: 0px -32px;
-	animation: headbob4 0.5s infinite;
-}
-
-
 @keyframes headbob4 {
    0%, 100% { margin-left: 40px; }
      50% { margin-left: 42px; }
@@ -246,7 +171,7 @@ progress::-webkit-progress-value {
 
 
 
-.bunning {
+.sprint {
   position: absolute;
   width: 100px;
   top: 20px;
@@ -254,4 +179,68 @@ progress::-webkit-progress-value {
   color: red;
   z-index: 999999;
   background-color: white;
+}
+
+.sprint.effect {
+  position: absolute;
+  top: -85px;
+  left: -50px;
+  width: 192px;
+  height: 192px;
+  z-index: -20;
+  animation: sprint 0.5s steps(5) infinite;
+}
+
+.sprint.back {
+  background: transparent url(/public/images/skills/skill-a-back.png) 0 0 no-repeat;
+}
+
+.sprint.front {
+  z-index: 1;
+  background: transparent url(/public/images/skills/skill-a-front.png) 0 0 no-repeat;
+}
+
+@keyframes sprint {
+  100% { background-position: -960px 0;}
+}
+
+.active-skill {
+  font-family: 'Dokdo', cursive;
+  position: absolute;
+  top: 20px;
+  left: -150px;
+  font-size: 2em;
+  z-index: 99;
+  width: 200px;
+  -webkit-text-stroke: black 1px;
+  text-transform: uppercase;
+  color: #ff4203;
+  animation: text-effect 1s ease infinite;
+  /* animation-delay: 10ms; */
+}
+
+@keyframes text-effect {
+  0%,
+  100% {
+    color: #ff4203;
+  }
+
+  50% {
+    color: #fff;
+  }
+}
+
+.username {
+  position: absolute;
+  text-align: left;
+  color: white;
+  -webkit-text-stroke: black 1px;
+  left: 100px;
+  font-size: 2em;
+  width: 300px;
+}
+
+.username span {
+  font-size: 0.5em;
+  -webkit-text-stroke: white 0.3px;
 }

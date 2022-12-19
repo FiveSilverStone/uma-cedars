@@ -29,26 +29,21 @@ body {background-image: url(/public/images/bg.png); margin: 0; padding: 0; font-
 
 body {overflow: hidden;}
 
-.track { margin-top: 30px;}
+.track { margin-top: 70px; height: 80vh;}
 
-#scroll {overflow: hidden; width: 100vw; height: 50vh;}
+#scroll {
+  overflow-x: hidden;
+  overflow-y: visible;
 
-.bush {
-	width: 32px;
-	height: 50vh;
-	float: left;
-	top: 0; 
-	position: absolute;
-  background-image: url(/public/images/bush.png);
-  margin-left: 50vw;
+
+  width: 100vw; height: 80vh; margin-top: -70px;
 }
 
-.jump1 {margin-left: 50vw;}
-.jump2 {margin-left: 80vw;}
-.jump3 {margin-left: 120vw;}
-.jump4 {margin-left: 180vw;}
-.jump5 {margin-left: 200vw;}
-.jump6 {margin-left: 250vw;}
+.section {
+  top: 0px;
+  position: absolute;
+  height: 80vh;
+}
 
 .top-board {
   display: flex;
@@ -70,4 +65,28 @@ body {overflow: hidden;}
   flex: auto;
   font-size: 3em;
   color:#eee;
+}
+
+.nowSection {
+  position: relative;
+  margin-top: 20px;
+  font-size: 3em;
+  color:#eee;
+}
+
+.bush {
+  background:url(/public/images/bush.png);
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: 0px;
+  z-index: 30;
+}
+
+.bush.top {
+  top: -30px;
+}
+
+.bush.bottom {
+  bottom: -30px;
 }

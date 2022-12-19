@@ -1,23 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import { useImmer } from 'use-immer';
+import { getCurrentSection } from './module';
 
-import { trackLineLength, finishLinePosition, rankUserCount, defaultMaxStamina } from './setting';
+import { trackLineLength, finishLinePosition, rankUserCount, defaultMaxStamina, sectionData, traitList } from './setting';
 
 
 import User from './component/User';
 
-const userList = ['A', 'B', 'C', 'D', 'E', 'F']
+const userList = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+
+const settingRandomTrait = () => {
+  return traitList[Math.floor(Math.random() * traitList.length)];
+}
 
 const userData = userList.map(name => {
   return { 
     name, 
-    position: 0, 
+    position: 0,
     isBunning: false, 
     finished: false,
+    nowSection: getCurrentSection(0),
     stamina: defaultMaxStamina,
-    maxStamina: defaultMaxStamina
+    maxStamina: defaultMaxStamina,
+    trait: settingRandomTrait()
   }
 })
 
@@ -27,6 +33,8 @@ let topRankUser = {
 };
 
 let interval;
+
+
 
 function App() {
   const [sequence, setSequence] = useState(0);
@@ -39,6 +47,7 @@ function App() {
     setUsers(draft => {
       const user = draft.find(t => t.name === nextUser.name)
       user.position = nextUser.position;
+      user.nowSection = getCurrentSection(nextUser.position).section;
       user.finished = nextUser.finished;
       user.stamina = nextUser.stamina;
       user.maxStamina = nextUser.maxStamina;
@@ -71,10 +80,23 @@ function App() {
   }, [sequence]); 
 
   useEffect(() => {
+    console.log(rankUsers);
     if(rankUsers.length >= rankUserCount) clearInterval(interval);    
   }, [rankUsers]);
 
   const remainDistance = finishDistance(topRankUser.position);
+  const nowSection = getCurrentSection(topRankUser.position);
+  const { early, mid, end, last } = sectionData;
+
+  const topBushs = [];
+  const bottomBushs = [];
+  for(let i=0; i <= trackLineLength; i++){
+    if(i % 30 === 0) {
+      topBushs.push(<div className="bush top" style={{left: `${i}vw`}}/>);
+      bottomBushs.push(<div className="bush bottom" style={{left: `${i}vw`}}/>);
+    }
+  }  
+
   return (
     <div className="App">    
       <div className='top-board'>
@@ -94,19 +116,45 @@ function App() {
             </>
           }          
         </div>
-      </div> 
+      </div>
+      <div className='nowSection'>{nowSection.msg}!!!</div>
       <div id="scroll" ref={scrollElement}>
         <div className="track" ref={trackElement} style={{width: `${trackLineLength}vw`}}>
-          {users.map((user) => <User sequence={sequence} user={user} handleUserUpdate={handleUserUpdate} handleFinish={handleFinish} />)}
-          <div className="bush jump1"></div>
-          <div className="bush jump2"></div>
-          <div className="bush jump3"></div>
-          <div className="bush jump4"></div>
-          <div className="bush jump5"></div>
-          <div className="bush jump6"></div>
+          {topBushs}
+          <div className="section early" 
+                style={{
+                  width: `${finishLinePosition * early}vw`, 
+                  backgroundColor: 'rgba(200,30,200, 0.4)'
+                }}/>
+          <div className="section mid"
+              style={{
+                width: `${finishLinePosition * (mid - early)}vw`,
+                marginLeft: `${finishLinePosition * early}vw`,
+                backgroundColor: 'rgba(30,200,200, 0.4)'
+              }}/>
+          <div className="section end" 
+              style={{
+                width: `${finishLinePosition * (end - mid)}vw`, 
+                marginLeft: `${finishLinePosition * mid}vw`,
+                backgroundColor: 'rgba(30,30,200, 0.4)'
+              }}/>
+          <div className="section last" 
+              style={{
+                width: `${finishLinePosition * (last - end)}vw`, 
+                marginLeft: `${finishLinePosition * end}vw`,
+                backgroundColor: 'rgba(30,30,30, 0.4)'
+              }}/>
           <div id="finishline" style={{marginLeft: `${finishLinePosition}vw`}} />
-        </div>       
-      </div>      
+          {users.map((user) => {
+            return <User 
+                      sequence={sequence} user={user} 
+                      handleUserUpdate={handleUserUpdate} 
+                      handleFinish={handleFinish}
+                    /> 
+            })}
+          {bottomBushs}
+        </div>
+      </div>
     </div>
   );
 }
