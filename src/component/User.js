@@ -49,7 +49,7 @@ function User({sequence, user, handleUserUpdate, handleFinish}) {
           ...user,
           finished: true
         })
-      } else if(sequence%100 === 0){
+      } else if(sequence%100 === 0 && sequence !== 0){
         if(!sprint.state && getRandomInt(1, 100) > (100 - parseInt(10 * (activeTrait? 2.0 : 1.0)))) setSprint({ state: true, turn: 0});
       } else {
         if(sprint.state) checkSprintSequence();
@@ -65,7 +65,8 @@ function User({sequence, user, handleUserUpdate, handleFinish}) {
   },[sequence]);
 
   useEffect(()=>{
-    console.log(activeTrait);
+    console.log(user.name);
+    console.log(activeTrait)
     console.log(nowSprintSpeed);
   },[activeTrait])
   return (

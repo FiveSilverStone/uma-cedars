@@ -90,3 +90,23 @@ body {overflow: hidden;}
 .bush.bottom {
   bottom: -30px;
 }
+
+
+.btn-panel {
+  position: absolute;
+  top: 0px;
+  width: 55%;
+  height: 205px;
+  background-color: rgb(205,244,246);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 100;
+}
+
+.btn-panel > button {
+  font-size: 3em;
+  padding: 30px;
+}
+

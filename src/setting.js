@@ -1,8 +1,8 @@
 // 경기장 총 길이, 화면 너비의 vw로 잡음
 // ex) 680 -> 화면 너비의 6.8배
-export const trackLineLength = 880;
+export const trackLineLength = parseInt(localStorage.getItem('trackLineLength')) || 880;
 export const finishLinePosition = trackLineLength - 30;
-export const rankUserCount = 3;
+export const rankUserCount = parseInt(localStorage.getItem('rankCount')) || 3;
 
 export const sprintRate = 0.05;
 export const sprintDurationRate = 1.0;
@@ -61,7 +61,7 @@ export const traitList = [{
   }
 },{
   id: 4,
-  name: '전심전력',
+  name: '죽기살기',
   desc: '라스트 스퍼트때 질주속도 증가',
   detail: [
     '라스트 스퍼트 구간 부터 질주속도 70% 증가하고 질주 발생 확률이 두배로 증가'

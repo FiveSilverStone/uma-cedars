@@ -4,11 +4,12 @@ import { useImmer } from 'use-immer';
 import { getCurrentSection } from './module';
 
 import { trackLineLength, finishLinePosition, rankUserCount, defaultMaxStamina, sectionData, traitList } from './setting';
+import Setting from './component/Setting';
 
 
 import User from './component/User';
 
-const userList = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+const userList = localStorage.getItem('userList') ? localStorage.getItem('userList').split(',') : ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 const settingRandomTrait = () => {
   return traitList[Math.floor(Math.random() * traitList.length)];
@@ -34,12 +35,12 @@ let topRankUser = {
 
 let interval;
 
-
-
 function App() {
   const [sequence, setSequence] = useState(0);
+  const [maxCount, setMaxCount] = useState(rankUserCount);  
   const [users, setUsers] = useImmer(userData);
   const [rankUsers, setRankUsers] = useImmer([]);
+  const [isStart, setIsStart] = useState(false);
   const scrollElement = useRef(null);
   const trackElement = useRef(null);
 
@@ -69,19 +70,22 @@ function App() {
   }
 
   useEffect(() => {
-    interval = setInterval(() => {
-      setSequence(c => c + 1);
-    }, 10);
-    return () => clearInterval(interval);
-  }, []); 
+    if(isStart) {
+      interval = setInterval(() => {
+        setSequence(c => c + 1);
+      }, 10);
+    }    
+  }, [isStart]); 
 
   useEffect(() => {    
     scrollElement.current.scrollLeft = (topRankUser.position - 1200);    
   }, [sequence]); 
 
   useEffect(() => {
-    console.log(rankUsers);
-    if(rankUsers.length >= rankUserCount) clearInterval(interval);    
+    if(rankUsers.length >= maxCount) {
+      clearInterval(interval);    
+      setIsStart(false);
+    }
   }, [rankUsers]);
 
   const remainDistance = finishDistance(topRankUser.position);
@@ -92,18 +96,26 @@ function App() {
   const bottomBushs = [];
   for(let i=0; i <= trackLineLength; i++){
     if(i % 30 === 0) {
-      topBushs.push(<div className="bush top" style={{left: `${i}vw`}}/>);
-      bottomBushs.push(<div className="bush bottom" style={{left: `${i}vw`}}/>);
+      topBushs.push(<div className="bush top" style={{left: `${i}vw`}} key={`bush${i}`} />);
+      bottomBushs.push(<div className="bush bottom" style={{left: `${i}vw`}} key={`bush${i}`} />);
     }
   }  
 
   return (
     <div className="App">    
       <div className='top-board'>
+        {isStart || (
+          <div className='btn-panel'>
+            <Setting userList={userList} setMaxCount={setMaxCount} />
+            <button onClick={()=> window.location.reload()}>준비</button>
+            {rankUsers.length > 0 || <button onClick={()=>setIsStart(true)}>시작하기</button>}
+          </div>)
+        }
+        
         <div className='info-board'>
           {rankUsers.length > 0 ? 
             <>
-              {rankUsers.map((user, idx)=><div>{idx+1}위: {user.name}</div>)}
+              {rankUsers.map((user, idx)=><div key={user.name}>{idx+1}위: {user.name}</div>)}
             </>
             :
             <>
@@ -147,6 +159,7 @@ function App() {
           <div id="finishline" style={{marginLeft: `${finishLinePosition}vw`}} />
           {users.map((user) => {
             return <User 
+                      key={user.name}
                       sequence={sequence} user={user} 
                       handleUserUpdate={handleUserUpdate} 
                       handleFinish={handleFinish}

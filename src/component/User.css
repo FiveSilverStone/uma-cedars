@@ -207,9 +207,9 @@ progress::-webkit-progress-value {
 .active-skill {
   font-family: 'Dokdo', cursive;
   position: absolute;
-  top: 20px;
+  top: 0px;
   left: -150px;
-  font-size: 2em;
+  font-size: 3em;
   z-index: 99;
   width: 200px;
   -webkit-text-stroke: black 1px;
