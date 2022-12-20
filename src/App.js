@@ -78,7 +78,7 @@ function App() {
   }, [isStart]); 
 
   useEffect(() => {    
-    scrollElement.current.scrollLeft = (topRankUser.position - 1200);    
+    scrollElement.current.scrollLeft = (topRankUser.position - 1700);    
   }, [sequence]); 
 
   useEffect(() => {
