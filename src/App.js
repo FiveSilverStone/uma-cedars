@@ -102,7 +102,8 @@ function App() {
   }  
 
   return (
-    <div className="App">    
+    <div className="App">
+      <a className="help" href="https://gainful-appendix-a7a.notion.site/d825304e6e7a49ac86fd7e8727ea4732" target="_blank" rel="noreferrer">?</a>
       <div className='top-board'>
         {isStart || (
           <div className='btn-panel'>
