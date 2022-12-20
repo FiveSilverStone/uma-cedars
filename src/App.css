@@ -45,6 +45,34 @@ body {overflow: hidden;}
   height: 80vh;
 }
 
+.section.early {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2), 
+    rgba(0, 0, 0, 0.2)
+  ), url(/public//images/map/tile_1.png);
+}
+
+.section.mid {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2), 
+    rgba(0, 0, 0, 0.2)
+  ), url(/public//images/map/tile_2.png);
+}
+
+.section.end {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2), 
+    rgba(0, 0, 0, 0.2)
+  ), url(/public//images/map/tile_3.png);
+}
+
+.section.last {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2), 
+    rgba(0, 0, 0, 0.2)
+  ), url(/public//images/map/tile_4.png);
+}
+
 .top-board {
   display: flex;
   align-items: center;

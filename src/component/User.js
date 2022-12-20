@@ -2,7 +2,7 @@ import './User.css';
 import { finishLinePosition, trackLineLength, defaultSpeed, sprintSpeed, staminaCorrectionSpeed } from '../setting';
 import { useEffect, useState } from 'react';
 
-function User({sequence, user, handleUserUpdate, handleFinish}) {
+function User({sequence, user, handleUserUpdate, handleFinish, isStart}) {
   const [sprint, setSprint] = useState({
     state: false,
     turn: 0
@@ -76,7 +76,7 @@ function User({sequence, user, handleUserUpdate, handleFinish}) {
           <div className="head" />
           <div className="body" />
         </div>
-        <span className="username">{user.name} <span>({trait.name})</span></span>
+        <span className="username">{user.name} {isStart || <span>({trait.name})</span>}</span>
         {activeTrait ? <span className="active-skill"> {activeTrait}!! </span> : null }
         <progress value={user.stamina} max={user.maxStamina}></progress>
         {sprint.state? 

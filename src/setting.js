@@ -25,13 +25,13 @@ export const traitList = [{
   name: '선수필승',
   desc: '초반 구간에서 질주속도가 증가',
   detail: [
-    '초반 구간부터 중반 구간 전까지 질주속도 45% 증가하고 질주 발생 확률이 두배로 증가'
+    '초반 구간부터 중반 구간 전까지 질주속도 60% 증가하고 질주 발생 확률이 두배로 증가'
   ],
   trigger: (c)=> c.section==='early' && c.section !=='mid',
   effect: {
     target: 'sprintSpeed',
     type: '',
-    value: 1.75
+    value: 1.9
   }
 },{
   id: 2,

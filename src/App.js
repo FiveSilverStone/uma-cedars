@@ -110,8 +110,7 @@ function App() {
             <button onClick={()=> window.location.reload()}>준비</button>
             {rankUsers.length > 0 || <button onClick={()=>setIsStart(true)}>시작하기</button>}
           </div>)
-        }
-        
+        }        
         <div className='info-board'>
           {rankUsers.length > 0 ? 
             <>
@@ -136,25 +135,21 @@ function App() {
           <div className="section early" 
                 style={{
                   width: `${finishLinePosition * early}vw`, 
-                  backgroundColor: 'rgba(200,30,200, 0.4)'
                 }}/>
           <div className="section mid"
               style={{
                 width: `${finishLinePosition * (mid - early)}vw`,
                 marginLeft: `${finishLinePosition * early}vw`,
-                backgroundColor: 'rgba(30,200,200, 0.4)'
               }}/>
           <div className="section end" 
               style={{
                 width: `${finishLinePosition * (end - mid)}vw`, 
                 marginLeft: `${finishLinePosition * mid}vw`,
-                backgroundColor: 'rgba(30,30,200, 0.4)'
               }}/>
           <div className="section last" 
               style={{
                 width: `${finishLinePosition * (last - end)}vw`, 
                 marginLeft: `${finishLinePosition * end}vw`,
-                backgroundColor: 'rgba(30,30,30, 0.4)'
               }}/>
           <div id="finishline" style={{marginLeft: `${finishLinePosition}vw`}} />
           {users.map((user) => {
@@ -163,6 +158,7 @@ function App() {
                       sequence={sequence} user={user} 
                       handleUserUpdate={handleUserUpdate} 
                       handleFinish={handleFinish}
+                      isStart={isStart}
                     /> 
             })}
           {bottomBushs}
