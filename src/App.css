@@ -19,7 +19,7 @@ body {background-image: url(/public/images/bg.png); margin: 0; padding: 0; font-
 #finishline {
   top: 0px;
 	width: 2vw;
-	height: 1080px;
+	height: 70vh;
   background-color: #eee;
   background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(-45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
   background-size:1vw 1vw;
@@ -73,6 +73,7 @@ body {overflow: hidden;}
 }
 
 .top-board {
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,16 +81,42 @@ body {overflow: hidden;}
 }
 
 .info-board {
+  margin-top: 20px;
   border: white 2px solid;
   display: flex;
+  flex-wrap: wrap;
   border-radius: 10%;
   width: 50%;
   height: 100px;
   align-items: center
 }
 
+.info-board.move-center {
+  animation-duration: 2s;
+  animation-name: move-center;
+  animation-fill-mode: forwards;
+}
+
+@keyframes move-center {
+  from {
+    position: absolute;
+    z-index: 100;
+  }
+
+  to {
+    background-color: rgba(4,4,4, 0.7);
+    height: 300px;
+    width: 70%;
+    font-size: 2em;
+    position: absolute;
+    margin-top: 50%;
+    z-index: 100;
+    visibility: visible;
+  }
+}
+
 .info-board > div {
-  flex: auto;
+  width: 33%;
   font-size: 3em;
   color:#eee;
 }
@@ -123,8 +150,9 @@ body {overflow: hidden;}
   position: absolute;
   top: 0px;
   width: 55%;
-  height: 205px;
-  background-color: rgb(205,244,246);
+  height: 225px;
+  background-color: rgba(44, 44, 44, 0.3);
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,3 +165,6 @@ body {overflow: hidden;}
   padding: 30px;
 }
 
+.hidden {
+  visibility: hidden;
+}

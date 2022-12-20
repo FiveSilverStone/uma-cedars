@@ -111,19 +111,19 @@ function App() {
             {rankUsers.length > 0 || <button onClick={()=>setIsStart(true)}>시작하기</button>}
           </div>)
         }        
-        <div className='info-board'>
+        <div className={`info-board ${rankUsers.length >= maxCount ? 'move-center' : null} ${rankUsers.length <= maxCount && isStart ? '' : 'hidden'}`}>
           {rankUsers.length > 0 ? 
             <>
               {rankUsers.map((user, idx)=><div key={user.name}>{idx+1}위: {user.name}</div>)}
             </>
             :
             <>
-            <div>
-              현재 1위: {topRankUser.name}
-            </div>
-            <div>
-              남은거리: {remainDistance}m
-            </div>
+              <div>
+                현재 1위: {topRankUser.name}
+              </div>
+              <div>
+                남은거리: {remainDistance}m
+              </div>
             </>
           }          
         </div>
