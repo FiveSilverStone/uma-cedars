@@ -69,6 +69,11 @@ function App() {
     return distance > 0 ? distance : 0;
   }
 
+  const remainDistancePercentage = (position) => {
+    const distance = (window.innerWidth*(finishLinePosition/100));
+    return  100 /distance * position;
+  }
+
   useEffect(() => {
     if(isStart) {
       interval = setInterval(() => {
@@ -105,24 +110,29 @@ function App() {
     <div className="App">
       <a className="help" href="https://gainful-appendix-a7a.notion.site/d825304e6e7a49ac86fd7e8727ea4732" target="_blank" rel="noreferrer">?</a>
       <div className='top-board'>
-        {isStart || (
+        {!isStart ? (
           <div className='btn-panel'>
             <Setting userList={userList} setMaxCount={setMaxCount} />
             <button onClick={()=> window.location.reload()}>준비</button>
             {rankUsers.length > 0 || <button onClick={()=>setIsStart(true)}>시작하기</button>}
           </div>)
-        }        
+          :
+          <div className="running-progress">
+            {users.map((user)=> <span className="user-card" style={{left: `${remainDistancePercentage(user.position)}%`}}>{user.name}</span>)}           
+          </div>
+        }   
+        {/* <div className={`info-board ${rankUsers.length >= maxCount ? 'move-center' : null} `}>      */}
         <div className={`info-board ${rankUsers.length >= maxCount ? 'move-center' : null} ${rankUsers.length <= maxCount && isStart ? '' : 'hidden'}`}>
           {rankUsers.length > 0 ? 
             <>
-              {rankUsers.map((user, idx)=><div key={user.name}>{idx+1}위: {user.name}</div>)}
+              {rankUsers.map((user, idx)=><div className='title' key={user.name}>{idx+1}위: {user.name}</div>)}
             </>
             :
             <>
-              <div>
+              <div className='title'>
                 현재 1위: {topRankUser.name}
               </div>
-              <div>
+              <div className='title'>
                 남은거리: {remainDistance}m
               </div>
             </>

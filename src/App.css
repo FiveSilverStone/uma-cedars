@@ -131,10 +131,30 @@ body {overflow: hidden;}
   }
 }
 
-.info-board > div {
+.info-board > div.title {
   width: 33%;
   font-size: 3em;
   color:#eee;
+}
+
+.running-progress {
+  bottom: 20px;
+  position: absolute;
+  width: 80%;
+  height: 30px;
+  line-height: 30px;
+  background-color: black;
+  border-radius: 5px;
+  border: white solid 1px;
+}
+
+.running-progress > .user-card {
+  min-width: 30px;
+  color: black;
+  opacity: 0.8;
+  display: inline-block;
+  position: absolute;
+  background-color: yellow;
 }
 
 .nowSection {
