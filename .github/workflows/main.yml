@@ -7,7 +7,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
     - uses: actions/checkout@main
     - uses: actions/setup-node@v3.7.0
@@ -17,14 +19,16 @@ jobs:
       run: |
         npm install
         npm run build
-        
-    - uses: jakejarvis/s3-sync-action@master
+    
+    - name: Deploy
+      uses: reggionick/s3-deploy@v3
       with:
-        args: --follow-symlinks --delete
-      env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: 'ap-northeast-2'   # optional: defaults to us-east-1
-        SOURCE_DIR: 'build'      # optional: defaults to entire repository   
-        
+        folder: build
+        bucket: ${{ secrets.AWS_S3_BUCKET }}
+        bucket-region: ${{ secrets.AWS_S3_BUCKET_REGION }}
+        dist-id: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+        invalidation: /
+        delete-removed: true
+        no-cache: true
+        private: true
+        files-to-include: ".*/*,*/*,**"
