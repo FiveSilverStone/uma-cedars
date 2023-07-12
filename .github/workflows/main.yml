@@ -17,8 +17,6 @@ jobs:
       run: |
         npm install
         npm run build
-      env:
-        CI: true
         
     - uses: jakejarvis/s3-sync-action@master
       with:
