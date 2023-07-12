@@ -10,6 +10,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
+    - uses: actions/setup-node@v3.7.0
+      with:
+          node-version: '18'
     - uses: jeanlescure/react-deploy-to-s3-action@main
       with:
         args: --acl public-read --follow-symlinks --delete
