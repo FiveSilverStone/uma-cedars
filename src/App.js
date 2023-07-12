@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import { useImmer } from 'use-immer';

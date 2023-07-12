@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './User.css';
 import { finishLinePosition, trackLineLength, defaultSpeed, sprintSpeed, staminaCorrectionSpeed } from '../setting';
 import { useEffect, useState } from 'react';
